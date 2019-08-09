@@ -7,7 +7,7 @@ import Interpreter from './Interpreter';
 import ProgramTextEditor from './ProgramTextEditor';
 import TextSyntax from './TextSyntax';
 import TurtleGraphics from './TurtleGraphics';
-import {View, Button, Text} from 'react-native';
+import {View, Button, Text, Switch} from 'react-native';
 
 type AppState = {
     program: Array<string>,
@@ -31,7 +31,8 @@ export default class App extends React.Component<{}, AppState> {
         this.state = {
             program: ["forward", "left"],
             programVer: 1,
-            numEditors: 1
+            numEditors: 1,
+            liveMode: false
         };
 
         this.appContext = {
@@ -67,6 +68,8 @@ export default class App extends React.Component<{}, AppState> {
         this.handleClickRun = this.handleClickRun.bind(this);
         this.handleClickHome = this.handleClickHome.bind(this);
         this.handleClickClear = this.handleClickClear.bind(this);
+        this.showLiveFeedback = this.showLiveFeedback.bind(this);
+        this.changeMode = this.changeMode.bind(this);
     }
 
     handleProgramChange: (Array<string>) => void;
@@ -89,6 +92,7 @@ export default class App extends React.Component<{}, AppState> {
 
     handleClickRun: () => void;
     handleClickRun() {
+        this.interpreter.run(this.state.program);
     }
 
     handleClickHome: () => void;
@@ -105,15 +109,30 @@ export default class App extends React.Component<{}, AppState> {
         }
     }
 
+    showLiveFeedback: () => void;
+    showLiveFeedback() {
+        this.interpreter.run(this.state.program);
+        //this.handleProgramChange();
+    }
+
+    changeMode: () => void;
+    changeMode() {
+        this.setState({liveMode : !this.state.liveMode});
+    }
+
     render() {
         return (
             <View>
+                <Switch
+                    onValueChange = {this.changeMode}
+                    value = {this.state.liveMode}/>
                 {[...Array(this.state.numEditors)].map((x, i) => {
                     return <ProgramTextEditor
+                        liveMode= {this.state.liveMode}
                         program={ this.state.program }
                         programVer={ this.state.programVer }
                         syntax={ this.syntax }
-                        onChange={ this.handleProgramChange }
+                        onChange={ this.showLiveFeedback }
                         key={ i } />
                 })}
                 <EditorsSelect
