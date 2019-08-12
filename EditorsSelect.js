@@ -21,7 +21,7 @@ export default class EditorsSelect extends React.Component<EditorsSelectProps> {
 
     render() {
         return (
-            <Picker value={this.props.numEditors} onChange={this.handleChange}>
+            <Picker value={this.props.numEditors} onValueChange={this.handleChange}>
                 <Picker.Item value="0" label="0"/>
                 <Picker.Item value="1" label="1"/>
                 <Picker.Item value="2" label="2"/>
