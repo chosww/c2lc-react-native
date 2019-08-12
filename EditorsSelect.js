@@ -22,10 +22,10 @@ export default class EditorsSelect extends React.Component<EditorsSelectProps> {
     render() {
         return (
             <Picker value={this.props.numEditors} onChange={this.handleChange}>
-                <Picker.Item value="0">0</Picker.Item>
-                <Picker.Item value="1">1</Picker.Item>
-                <Picker.Item value="2">2</Picker.Item>
-                <Picker.Item value="3">3</Picker.Item>
+                <Picker.Item value="0" label="0"/>
+                <Picker.Item value="1" label="1"/>
+                <Picker.Item value="2" label="2"/>
+                <Picker.Item value="3" label="3"/>
             </Picker>
         );
     }
