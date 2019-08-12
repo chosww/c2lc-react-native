@@ -4,7 +4,7 @@ import React from 'react';
 import * as C2lcMath from './C2lcMath';
 import {View, Text} from 'react-native';
 import Turtle from './components/Turtle';
-import { Svg } from 'react-native-svg'
+import { Svg, Line } from 'react-native-svg'
 
 type TurtleGraphicsState = {
     location: {
@@ -97,15 +97,21 @@ export default class TurtleGraphics extends React.Component<{}, TurtleGraphicsSt
 
         return (
             <View>
-                <Text
-                    role='img'
-                    className='c2lc-turtleGraphics-drawingArea'
-                    aria-label='Drawing area'>
-                    <Svg
-                        viewBox='-100 -100 200 200'
-                    >
-                        <Turtle location={this.state.location} directionDegrees={this.state.directionDegrees} path={this.state.path}/>
-                    </Svg>
+                <Svg
+                    viewBox='-100 -100 200 200'
+                >
+                    {this.state.path.map((pathSegment, i) => {
+                        return <Line 
+                            x1={pathSegment.x1}
+                            y1={pathSegment.y1}
+                            x2={pathSegment.x2}
+                            y2={pathSegment.y2}
+                            stroke="black"
+                            strokeWidth="2"
+                            key={i} />
+                    })}
+                    <Turtle location={this.state.location} directionDegrees={this.state.directionDegrees} path={this.state.path}/>
+                </Svg>
                     {/* <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='-100 -100 200 200'>
@@ -118,7 +124,6 @@ export default class TurtleGraphics extends React.Component<{}, TurtleGraphicsSt
                                 key={i} />
                         })}
                     </svg> */}
-                </Text>
             </View>
         );
     }
