@@ -1,9 +1,9 @@
 This project is a react-native spin off version of (https://github.com/simonbates/c2lc-react)
 
 ## Required Tools
-Expo Cli - https://docs.expo.io/versions/latest/workflow/expo-cli/
-Xcode - https://apps.apple.com/us/app/xcode/id497799835?mt=12 for iOS
-Android - https://developer.android.com/studio for Android
+Expo Cli - https://docs.expo.io/versions/latest/workflow/expo-cli/  
+Xcode - https://apps.apple.com/us/app/xcode/id497799835?mt=12 for iOS  
+Android - https://developer.android.com/studio for Android  
 
 ## Set up
 
