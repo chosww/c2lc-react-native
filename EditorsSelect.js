@@ -16,7 +16,7 @@ export default class EditorsSelect extends React.Component<EditorsSelectProps> {
 
     handleChange: (SyntheticEvent<HTMLSelectElement>) => void;
     handleChange(e: SyntheticEvent<HTMLSelectElement>) {
-        this.props.onChange(parseInt(e.currentTarget.value, 10));
+        this.props.onChange(parseInt(e, 10));
     }
 
     render() {
