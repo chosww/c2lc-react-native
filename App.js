@@ -8,6 +8,7 @@ import ProgramTextEditor from './ProgramTextEditor';
 import TextSyntax from './TextSyntax';
 import TurtleGraphics from './TurtleGraphics';
 import {View, Button, Text, Switch} from 'react-native';
+import {styles} from './Style';
 
 type AppState = {
     program: Array<string>,
@@ -70,6 +71,7 @@ export default class App extends React.Component<{}, AppState> {
         this.handleClickClear = this.handleClickClear.bind(this);
         this.showLiveFeedback = this.showLiveFeedback.bind(this);
         this.changeMode = this.changeMode.bind(this);
+        this.validateInput = this.validateInput.bind(this);
     }
 
     handleProgramChange: (Array<string>) => void;
@@ -84,7 +86,6 @@ export default class App extends React.Component<{}, AppState> {
 
     handleNumEditorsChange: (number) => void;
     handleNumEditorsChange(numEditors: number) {
-        console.log(numEditors);
         this.setState({
             numEditors: numEditors
         });
@@ -111,8 +112,15 @@ export default class App extends React.Component<{}, AppState> {
 
     showLiveFeedback: () => void;
     showLiveFeedback() {
+        let lastInput = input[this.state.program[this.state.program.length]];
+        if (this.validateInput(lastInput)) this.props.onChange(this.props.syntax.read(this.state.program));
         this.interpreter.run(this.state.program);
         //this.handleProgramChange();
+    }
+
+    validateInput: (text) => boolean;
+    validateInput(text) {
+        return text === 'forward' || text === 'left' || text === 'right';
     }
 
     changeMode: () => void;
@@ -122,38 +130,50 @@ export default class App extends React.Component<{}, AppState> {
 
     render() {
         return (
-            <View>
-                <Switch
+            <View style={styles.container}>
+                {/* <Switch
                     onValueChange = {this.changeMode}
-                    value = {this.state.liveMode}/>
-                {[...Array(this.state.numEditors)].map((x, i) => {
-                    return <ProgramTextEditor
-                        liveMode= {this.state.liveMode}
-                        program={ this.state.program }
-                        programVer={ this.state.programVer }
-                        syntax={ this.syntax }
-                        onChange={ this.showLiveFeedback }
-                        key={ i } />
-                })}
+                    value = {this.state.liveMode}/> */}
+                <View style={styles.programTextEditor}>
+                <View style={styles.programTextEditorContainer}>
+                    <Text>Program: </Text>
+                    {[...Array(this.state.numEditors)].map((x, i) => {
+                        return <ProgramTextEditor
+                            liveMode= {this.state.liveMode}
+                            program={ this.state.program }
+                            programVer={ this.state.programVer }
+                            syntax={ this.syntax }
+                            onChange={ this.handleProgramChange }
+                            key={ i } />
+                    })}
+                </View>
+                </View>
+                <View style={styles.editorSelector}>
                 <EditorsSelect
-                    numEditors={ this.state.numEditors }
+                    numEditors={ this.state.numEeditors }
                     onChange={ this.handleNumEditorsChange } />
-                <View className='c2lc-graphics'>
+                </View>
+                <View style={styles.screen}>
                     <TurtleGraphics ref={this.turtleGraphicsRef} />
                 </View>
-                <Button 
-                    onPress={this.handleClickRun}
-                    title="Run"
-                />
-                <Button 
-                    onPress={this.handleClickHome}
-                    title="Home"
-                />
-                <Button 
-                    onPress={this.handleClickClear}
-                    title="Clear"
-                />
-                <View>
+                <View style={styles.buttonContainer}>
+                    <Button 
+                        style={styles.button}
+                        onPress={this.handleClickRun}
+                        title="Run"
+                    />
+                    <Button 
+                        style={styles.button}
+                        onPress={this.handleClickHome}
+                        title="Home"
+                    />
+                    <Button 
+                        style={styles.button}
+                        onPress={this.handleClickClear}
+                        title="Clear"
+                    />
+                </View>
+                <View style={styles.footer}>
                     {this.appContext.bluetoothApiIsAvailable ? (
                         <Text>Bluetooth available</Text>
                     ) : (
