@@ -29,7 +29,7 @@ This command requires Android Studio and will run the application on Android sim
 
 Run this command if you want to use more of the native packages than using Expo modules. 
 
-## To run on iOS simulator without using the Expo application
+## To run the application on iOS simulator without using the Expo application
 
 Run expo build:ios -t simulator then it will prompt a link where you can download tarball of the application. Once you download the tarball, run tar -xvzf filename. After that run an iOS simulator then run xcrun simctl install booted <app path> and xcrun simctl install booted <app path>.
 
