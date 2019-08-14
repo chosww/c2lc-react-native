@@ -26,6 +26,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.codelearncreate.c2lc"
-    }
+    },
+    "description": "React native version of c2lc prototype"
   }
 }
