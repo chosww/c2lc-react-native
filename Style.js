@@ -11,20 +11,18 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         paddingTop: '15%',
-        flexWrap: 'wrap',
         alignItems: 'flex-start'
     },
     programTextEditorContainer: {
         flex: 1,
         width: entireScreenWidth*0.3,
-        height: 50
+        height: 100
     },
     programTextEditor: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         flex: 1,
         width: '100%',
-        height: '30%'
+        height: '100%'
     },
     editorSelector: {
         flex: 1,
@@ -56,8 +54,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 'auto'
     }
-
-    
 });
 
 export { styles }
