@@ -83,12 +83,11 @@ export default class ProgramTextEditor extends React.Component<ProgramTextEditor
 
     render() {
         return (
-            <View>
-                <TextInput
-                    value={this.state.text}
-                    onChange={this.props.liveMode ? this.handleLiveChange : this.handleChange}
-                    onBlur={this.handleBlur} />
-            </View>
+            <TextInput
+                value={this.state.text}
+                onChangeText={(text) => this.setState({text})}
+                onBlur={this.handleBlur} 
+            />
         );
     }
 }
