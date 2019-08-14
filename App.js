@@ -9,6 +9,8 @@ import TextSyntax from './TextSyntax';
 import TurtleGraphics from './TurtleGraphics';
 import {View, Button, Text, Switch} from 'react-native';
 import {styles} from './Style';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 
 type AppState = {
     program: Array<string>,
@@ -72,6 +74,8 @@ export default class App extends React.Component<{}, AppState> {
         this.showLiveFeedback = this.showLiveFeedback.bind(this);
         this.changeMode = this.changeMode.bind(this);
         this.validateInput = this.validateInput.bind(this);
+        this.getPermission = this.getPermission.bind(this);
+        this.getPermission();
     }
 
     handleProgramChange: (Array<string>) => void;
@@ -128,25 +132,34 @@ export default class App extends React.Component<{}, AppState> {
         this.setState({liveMode : !this.state.liveMode});
     }
 
+    getPermission = async () => {
+        const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+            alert('Hey! You might want to enable notifications for my app, they are good.');
+        } else {
+            return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 {/* <Switch
                     onValueChange = {this.changeMode}
                     value = {this.state.liveMode}/> */}
-                <View style={styles.programTextEditor}>
                 <View style={styles.programTextEditorContainer}>
-                    <Text>Program: </Text>
                     {[...Array(this.state.numEditors)].map((x, i) => {
-                        return <ProgramTextEditor
-                            liveMode= {this.state.liveMode}
-                            program={ this.state.program }
-                            programVer={ this.state.programVer }
-                            syntax={ this.syntax }
-                            onChange={ this.handleProgramChange }
-                            key={ i } />
+                        return <View accessible={true} style={styles.programTextEditor} key={ i }>
+                            <Text>Program: </Text>
+                            <ProgramTextEditor
+                                liveMode= {this.state.liveMode}
+                                program={ this.state.program }
+                                programVer={ this.state.programVer }
+                                syntax={ this.syntax }
+                                onChange={ this.handleProgramChange }
+                                key={ i } />
+                        </View>
                     })}
-                </View>
                 </View>
                 <View style={styles.editorSelector}>
                 <EditorsSelect
